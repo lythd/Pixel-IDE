@@ -1,0 +1,3 @@
+import-math,lang.core.math.import,void
+root,lang.core.math.root,float,int,int
+multiply,lang.core.math.multiply,int,int,int

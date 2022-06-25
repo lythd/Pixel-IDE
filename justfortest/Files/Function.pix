@@ -1,0 +1,5 @@
+import McFunction;
+
+public class Function {
+ Block block = new Block();
+}

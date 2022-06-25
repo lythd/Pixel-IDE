@@ -1,0 +1,22 @@
+.pxlib files for libraries
+	starts with "@override default" if it is to override the default library.
+	then with "export PATH" PATH is the path for the file. "src/exports/NAME.pxexp" for internal and 
+	"exports/NAME.pxexp" for external NAME is the name of the file.
+	define methods likes this "method NAME (PARAMETERS)" NAME is the name of the method and PARAMATERS are the parameters.
+	define functions like this "function RETURN NAME (PARAMETERS) {
+	BODY
+	}" RETURN is the type of variable it returns (void if none) NAME is the name of the function, PARAMETERS
+	are the parameters and BODY is all the code you want to run.
+	define variables likes this "define TYPE NAME = VALUE" TYPE is the type, NAME is the name and VALUE is the value.
+.pxexp files for export instructions
+	for external export instructions for internal libraries (at the start of the code) "internal NAME" NAME is the name of the file not the path of the file.
+	for instructions in machine code (at the start of the code) "machinecode"
+	"export .TYPE" TYPE is the type for a different export type (located at the very start).
+	to export a function "function NAME (PARAMETERS) export "EXPORT"" NAME being the function name PARAMETERS being parameters.
+	and EXPORT being assembly code for it (Pixel IDE will take it from assembly code to machine code) or if you said instructions in machine code then it will be in machine code.
+	to export a method "method NAME (PARAMETERS) export "EXPORT"" NAME being the function name PARAMETERS being parameters.
+	and EXPORT being assembly code for it (Pixel IDE will take it from assembly code to machine code) or if you said instructions in machine code then it will be in 	machine code.
+.exe for exported pixel files unless an imported library's export file says otherwise. If multiple imported libraries
+	have different export types then raise an error "Conflicting export types from imports" and cancel export.
+.pixel for internal source code files.
+	imports (at the very start of the code) "import [ext/int] NAME" [ext] stands for external import [int] stands for internal import, NAME is the name of the file.

@@ -1,0 +1,15 @@
+ifloat,%lib-math-9734
+ifloat,%lib-math-9735
+ifloat,%lib-math-9736
+ifloat,%lib-math-9737
+ifloat,%lib-math-9738
+ifloat,%lib-math-9739
+ifloat,%lib-math-9740
+ifloat,%PI
+ifloat,%E
+ifloat,%DIV_ZERO
+ifloat,%ZERO_TO_ZERO
+set,%PI,3.1415926535897932384626433832795028841971693993582097
+set,%E,2.718281828459
+set,%DIV_ZERO,999999.0
+set,%ZERO_TO_ZERO,1.0

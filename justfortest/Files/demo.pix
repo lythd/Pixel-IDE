@@ -1,0 +1,44 @@
+import lang.core.math;
+int i = 4;
+int j = 3*2;
+String msg = "hello";
+print(msg);
+int blank=?;
+//sd sdfhous sfoushd 
+Object nothing=null;
+boolean yeehah =false;
+int k = multiply(j,i);
+print(3);
+print(k);
+j = 4*5-6;
+print(j);
+print(msg);
+float testroot = root(64,3);
+print(testroot);
+testroot = root(64,2);
+print(testroot);
+testroot = root(64,6);
+print(testroot);
+testroot = root(2,2);
+print(testroot);
+testroot = root(0,2);
+print(testroot);
+testroot = root(2,0);
+print(testroot);
+testroot = root(9,2);
+print(testroot);
+testroot = root(1,2);
+print(testroot);
+testroot = root(0.5,2);
+print(testroot);
+testroot = root(3,2);
+print(testroot);
+
+// TO DO
+// prjnt(DIV_ZERO) dont work, i think the problem is it misses the % when adding into instruction
+// casting, the instruction is there and working, but allow it to be used, maybe use a new symbol for it or something, like $= or something
+// DIV_ZERO and ZERO_TO_ZERO and other constants prebuilt in. PI and E in math library. maybe NaN, Infinity, Negative Infinity, with special values.
+// get variables to be highlighted on reassigning
+// stop functions from getting highlighted in a comment, like, punctiation is fine tho 
+// save prompt if not saved when testrunning or exporting 
+// do some basic graphics stuff, so that multi pp can be made in pixel

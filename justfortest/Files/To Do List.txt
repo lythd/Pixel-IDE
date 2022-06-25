@@ -1,0 +1,13 @@
+Current tasks on my mind:
+Make the tree have the ability to hide restricted nodes such as settings.pxset files.
+Make find and replace tool.
+Parse function in Parser, returns a list of CodeObjects which themselves are lists of CodeSubObjects. Except for CodeBracketArea which returns a list of CodeInstructions (on the Level of CodeObjects).
+Shortcuts like ctrl + s, ctrl + o, ctrl f.
+Add better exporting in the tree.
+.pxl (Pixel library archive which is like .pxe but all the .pxc files are unexported .pixel files still). Library’s for exporting to the different format things, export 
+library runnable theme and error. Include java less versions on website next to the corresponding java version. Aswell as javascript versions.
+package.pxs and project.pxs files to denote that the parent folder is a project or package.
+hide .pxs files
+make console a jscrollpane with a jtextfield so it can print multiple lines and you can't type in it.
+PixelEvent system, this handles errors,warnings,no file in editor etc.
+The PRE and PVM (runtime environment and virtual machine) are both coded in low level languages. Either c or something similar.

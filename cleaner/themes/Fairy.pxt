@@ -1,0 +1,11 @@
+55,35,55,this is background color
+75,30,85,this is text area color
+165,25,145,this is default text color
+165,75,30,this is special text color
+155,95,155,this is speech text color
+175,60,175,this is punctuation color
+15,165,15,this is class text color
+5,85,100,this is global text color 
+15,195,200,this is local text color
+195,95,195,this is commenting color
+95,195,95,this is function text color

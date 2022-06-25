@@ -1,0 +1,10 @@
+Current tasks on my mind:
+Make the tree have the ability to hide restricted nodes such as settings.pxset files.
+Shortcuts like ctrl + s, ctrl + o.
+Add better exporting in the tree.
+Change libraries from .pxlib to .pxl (Pixel library archive which is like .pxe but all the .pxc files are unexported .pixel files still). Library’s for exporting to the different format things, export 
+library runnable theme and error. Include java less versions on website next to the corresponding java version.
+Change .pxthm to .pxt
+Change .pxerr to .pxr
+Change .pxset to .pxs
+Change settings.pxset to theme.pxs, and also accept path files to a .pxt file.
