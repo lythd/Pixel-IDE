@@ -173,6 +173,7 @@ public class Interpreter implements Executor {
 		boolean addlater;
 		switch(cur.type) {
 			case "skip":
+				if((int)memory.get(0)>0)break;
 				tmpid=-1;
 				cur0=cur.data.get(0);
 				if(cur0.contains("%")) {
