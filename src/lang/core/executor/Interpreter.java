@@ -38,6 +38,8 @@ public class Interpreter implements Executor {
 	private Map<String,Integer> variables;//links the variable name to its index in memory
 	private Map<Integer,Integer> tmp;//links the tmp variable to its index in memory
 	
+	private int curInstruction;
+	
 	public void loadFromInstructions(InstructionObject[] instructions_) {
 		instructions=instructions_;
 		ridexecute();
@@ -150,13 +152,16 @@ public class Interpreter implements Executor {
 			printToConsole("No instructions given, exitting.",false,-1);
 			return;
 		}
+		DIV_ZERO = 9999;
+		ZERO_TO_ZERO = 1;
 		memory = new ArrayList<Object>();
 		memdata = new ArrayList<String>();
 		variables = new HashMap<String,Integer>();
 		tmp = new HashMap<Integer,Integer>();
+		curInstruction = 0;
 		initValues();
 		for(InstructionObject o : instructions) System.out.println(o.type + " " + o.data);
-		for(int i=0;i<instructions.length;i++) execute(instructions[i],i);
+		for(int curInstruction=0;curInstruction<instructions.length;curInstruction++) execute(instructions[curInstruction],curInstruction);
 	}
 	
 	private void execute(InstructionObject cur, int i) {
@@ -167,6 +172,94 @@ public class Interpreter implements Executor {
 		double val1,val2;
 		boolean addlater;
 		switch(cur.type) {
+			case "skip":
+				tmpid=-1;
+				cur0=cur.data.get(0);
+				if(cur0.contains("%")) {
+					int setFrom=0;
+					if(cur0.startsWith("%tmp"))setFrom=tmp.get(Integer.parseInt(cur0.substring(4)));//implement an exit condition if not an integer: try catch
+					else {
+						try {
+							setFrom=variables.get(cur0.substring(1));
+						} catch (Exception e) {
+							printToConsole("An attempt to skip by a non-existent variable of "+cur0.substring(1)+".",true,i);
+							printTraceback(i);
+							return;
+						}
+					}
+					if(memdata.get(setFrom).equals("integer")) value = memory.get(setFrom);
+					else {
+						if(tmpid>-1) {
+							value = memory.get(setFrom);
+						} else {
+							printToConsole("Cannot skip by a non integer variable.",true,i);
+							printTraceback(i);
+							return;
+						}
+					}
+				} else {
+					int type=-1;
+					if(isString(cur0)) {value=removeQuotes(cur0);type=0;}
+					else if(isInteger(cur0)) {value=Integer.parseInt(cur0);type=1;}
+					else if(isNumeric(cur0)) {value=Double.parseDouble(cur0);type=2;}
+					else if(isBoolean(cur0)) {value=Boolean.parseBoolean(cur0);type=3;}
+					else {
+						printToConsole("An attempt to print a unparseable value of "+cur0+".",true,i);
+						printTraceback(i);
+						return;
+					}
+					if(type!=1) {
+						printToConsole("An attempt to skip by a non integer value of "+cur0+".",true,i);
+						printTraceback(i);
+						return;
+					}
+				}
+				curInstruction += (int) value - 1;
+				break;
+			case "setskip":
+				tmpid=-1;
+				cur0=cur.data.get(0);
+				if(cur0.contains("%")) {
+					int setFrom=0;
+					if(cur0.startsWith("%tmp"))setFrom=tmp.get(Integer.parseInt(cur0.substring(4)));//implement an exit condition if not an integer: try catch
+					else {
+						try {
+							setFrom=variables.get(cur0.substring(1));
+						} catch (Exception e) {
+							printToConsole("An attempt to set skip reg from a non-existent variable of "+cur0.substring(1)+".",true,i);
+							printTraceback(i);
+							return;
+						}
+					}
+					if(memdata.get(setFrom).equals("integer")) value = memory.get(setFrom);
+					else {
+						if(tmpid>-1) {
+							value = memory.get(setFrom);
+						} else {
+							printToConsole("Skip reg being set to a variable of a different type.",true,i);
+							printTraceback(i);
+							return;
+						}
+					}
+				} else {
+					int type=-1;
+					if(isString(cur0)) {value=removeQuotes(cur0);type=0;}
+					else if(isInteger(cur0)) {value=Integer.parseInt(cur0);type=1;}
+					else if(isNumeric(cur0)) {value=Double.parseDouble(cur0);type=2;}
+					else if(isBoolean(cur0)) {value=Boolean.parseBoolean(cur0);type=3;}
+					else {
+						printToConsole("An attempt to print a unparseable value of "+cur0+".",true,i);
+						printTraceback(i);
+						return;
+					}
+					if(type!=1) {
+						printToConsole("An attempt to set skip reg by a non integer value of "+cur0+".",true,i);
+						printTraceback(i);
+						return;
+					}
+				}
+				memory.set(0, value);
+				break;
 			case "set":
 				tmpid=-1;
 				addlater=false;
@@ -1138,17 +1231,20 @@ public class Interpreter implements Executor {
 	}
 	
 	private void initValues() {
+		memory.add(0); //skip register
+		memdata.add("integer");
+		
 		memory.add(null);
 		memdata.add("object");
-		variables.put("null",0);
+		variables.put("null",1);
 		
 		memory.add(false);
 		memdata.add("boolean");
-		variables.put("false",1);
+		variables.put("false",2);
 		
 		memory.add(true);
 		memdata.add("boolean");
-		variables.put("true",2);
+		variables.put("true",3);
 	}
 	
 	private boolean isBoolean(String strBool) {
