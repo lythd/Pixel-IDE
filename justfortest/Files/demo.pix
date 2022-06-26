@@ -37,13 +37,19 @@ testroot = 0/0;
 print(testroot);
 
 // TO DO
-// skip and setskip instructions. setskip sets the variable %skip to the number provided, skip will skip the number of instructions provided, but only if %skip is 0.
 // all operations should call to their types for the function. it would call for the first type's function. for int and float this would just end up acting as normal, but it allows other types to have their own implementations while still using the symbols.
+// each variable will have a full name and type, its full name would have the file path its from, so like lang.core.math:e, the type would be the class its of, for primitive types it would just be the name, buts its equivalent to the class location, kinda like int and Integer in java and stuff.
+// code segments, these are essentially like mini files in the file, and can be nested, any variables defined in a code segment are local variables, and can be seen in that segment, and in any nested segments, but not in the rest of the file. would be used for if statements, functions, classes, etc. example might be like lang.core.math;vector.normalise:v
+// after the code segments work in the .pxl files then can start using it to do ifs and stuff. also the code segments would have a variable called return, thats whats used for the return value
+// all special variables should have a symbol in them, like #, this way even if they are typed they would never be used, otherwise its just a waste of names, and could lead to problems if used
+// objects store the pointer, -1 is null, in their definition it has all the types of fields it has, thats static so it also used to know how many spaces it has before it runs out
+// make string an actual object, it would hold a char and then a string object for the remaining, and then have all its function stuffs, a similar thing for infiger (infinite integer, stores itself backwards cause it needs to expand that way)
+// non static stuff in a class are put in a code segment called this, that way all self methods that the object would need can just use this, whereas any methods outside the object itself just use the object
 // separate int and float instructions.
 // go through all instructions and add try catches.
-// casting, the instruction is there and working, but allow it to be used, maybe use a new symbol for it or something, like $= or something
+// go through the highlight file and make sure it highlights all the right words, implement any unused words
+// casting, the instruction is there and working, but allow it to be used, cast will work via the of operator, it will run like secondvar = int of firstvar. casting is handled by the type like other operations. 
 // replace DIV_ZERO and ZERO_TO_ZERO with NaN and Indeterminate. Rather than having assigned values, they will be the value themselves, as like a string. In any operation it would just check for them, if either are found it would just immediately return them. 
 // get variables to be highlighted on reassigning
 // stop functions from getting highlighted in a comment, like, punctiation is fine tho 
-// save prompt if not saved when testrunning or exporting 
 // do some basic graphics stuff, so that multi pp can be made in pixel, and for game 

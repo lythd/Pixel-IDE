@@ -174,7 +174,7 @@ public class Interpreter implements Executor {
 		switch(cur.type) {
 			case "skip":
 				System.out.println("skip start");
-				if((int)memory.get(0)>0)break;
+				if((double)memory.get(0)>0)break;
 				System.out.println("skip continue");
 				tmp.forEach((key,val) -> {
 					System.out.println(key +" : "+val);
@@ -239,7 +239,7 @@ public class Interpreter implements Executor {
 							return;
 						}
 					}
-					if(memdata.get(setFrom).equals("integer")) value = memory.get(setFrom);
+					if(memdata.get(setFrom).equals("integer")||memdata.get(setFrom).equals("float")) value = memory.get(setFrom);
 					else {
 						if(tmpid>-1) {
 							value = memory.get(setFrom);
@@ -260,12 +260,13 @@ public class Interpreter implements Executor {
 						printTraceback(i);
 						return;
 					}
-					if(type!=1) {
-						printToConsole("An attempt to set skip reg by a non integer value of "+cur0+".",true,i);
+					if(type!=1&&type!=2) {
+						printToConsole("An attempt to set skip reg by a non numerical value of "+cur0+".",true,i);
 						printTraceback(i);
 						return;
 					}
 				}
+				if(value instanceof Integer) value = (double)(int)value;//this looks so stupid, but you have to cast to int first if its an object as objects can only cast to their type
 				memory.set(0, value);
 				break;
 			case "set":
@@ -1285,8 +1286,8 @@ public class Interpreter implements Executor {
 	}
 	
 	private void initValues() {
-		memory.add(0); //skip register
-		memdata.add("integer");
+		memory.add(0.0); //skip register
+		memdata.add("float");
 		
 		memory.add(null);
 		memdata.add("object");
