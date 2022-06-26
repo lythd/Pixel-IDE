@@ -14,6 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
@@ -166,7 +167,13 @@ public class PixelPanel extends JPanel {
 	    	      TitledBorder.DEFAULT_POSITION, null, mf.defaultText));
 	}
 	
+	private void offerSave() {
+		Object[] options = { "YES", "NO" };
+		if(JOptionPane.showOptionDialog(null, "You have unsaved work. Do you want to save first?", "Pixel : Unsaved work", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]) == 0) mf.treePanel.save();
+	}
+	
 	public void setCode(String code) {
+		if(file != null) offerSave();
 		file = null;
         codeArea.setCaret(hidden);
 		codeArea.setText(code);
@@ -181,6 +188,7 @@ public class PixelPanel extends JPanel {
 	}
 	
 	public void giveFile(File file) throws BadLocationException {
+		if(file != null) offerSave();
 		this.file = file;
 		if(file != null) {
 			String string = "";

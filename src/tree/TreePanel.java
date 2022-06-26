@@ -287,7 +287,7 @@ public class TreePanel extends JPanel{
 			@Override
 	        public void actionPerformed(ActionEvent arg0) {
 	            if (selectedNode != null && selectedbNode != null && !pop) {
-	            	if (!(selectedbNode.type() == "FOLDER" || selectedbNode.type() == "IMAGE" || selectedbNode.type() == "PIXEL_SETTINGS" || selectedbNode.type().contains("_EXPORTED"))) fireTreeEvent(new TreeEvent(this, selectedbNode.file(), "Save"));
+	            	if (!(selectedbNode.type() == "FOLDER" || selectedbNode.type() == "IMAGE" || selectedbNode.type() == "PIXEL_SETTINGS" || selectedbNode.type().contains("_EXPORTED"))) save();
 	            	else if (selectedbNode.type() == "FOLDER") fireTreeEvent(new TreeEvent(this, selectedbNode.nodeName() + " is a folder and can not be saved.", "Error"));
 	            	else if (selectedbNode.type() == "IMAGE") fireTreeEvent(new TreeEvent(this, selectedbNode.nodeName() + " is an image and can not be saved.", "Error"));
 	            	else if (selectedbNode.type() == "PIXEL_SETTINGS") fireTreeEvent(new TreeEvent(this, selectedbNode.nodeName() + " is a restricted file and can not be saved.", "Error"));
@@ -487,6 +487,10 @@ public class TreePanel extends JPanel{
 	
 	public void takentWorkspace() {
 		fireTreeEvent(new TreeEvent(this, "You have closed out of the file explorer.\nWorkspace not set.", "Info"));
+	}
+	
+	public void save() {
+		fireTreeEvent(new TreeEvent(this, selectedbNode.file(), "Save"));
 	}
 	
 	public void relaunch() {
