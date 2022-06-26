@@ -1,4 +1,5 @@
+import lang.core.math;
 String test = "start ye";
 print(test);
-float testroot = root(64,3);
+float testroot = root(64,1);
 print(testroot);

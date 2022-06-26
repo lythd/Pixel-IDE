@@ -1,6 +1,11 @@
 cast,%lib-math-9734,2
 cast,%lib-math-9735,`2~
 cast,%lib-math-9736,`1~
+setskip,`2~
+skip,4
+cast,`0~,69.0
+setskip,0
+skip,66
 power,%lib-math-9734,%lib-math-9735,%lib-math-9737
 subtract,%lib-math-9737,%lib-math-9736,%lib-math-9738
 subtract,%lib-math-9735,1,%lib-math-9739

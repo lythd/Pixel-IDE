@@ -161,7 +161,7 @@ public class Interpreter implements Executor {
 		curInstruction = 0;
 		initValues();
 		for(InstructionObject o : instructions) System.out.println(o.type + " " + o.data);
-		for(int curInstruction=0;curInstruction<instructions.length;curInstruction++) execute(instructions[curInstruction],curInstruction);
+		for(curInstruction=0;curInstruction<instructions.length;curInstruction++) execute(instructions[curInstruction],curInstruction);
 	}
 	
 	private void execute(InstructionObject cur, int i) {
@@ -173,7 +173,12 @@ public class Interpreter implements Executor {
 		boolean addlater;
 		switch(cur.type) {
 			case "skip":
+				System.out.println("skip start");
 				if((int)memory.get(0)>0)break;
+				System.out.println("skip continue");
+				tmp.forEach((key,val) -> {
+					System.out.println(key +" : "+val);
+				});
 				tmpid=-1;
 				cur0=cur.data.get(0);
 				if(cur0.contains("%")) {
@@ -215,7 +220,9 @@ public class Interpreter implements Executor {
 						return;
 					}
 				}
+				System.out.println("skip " + curInstruction);
 				curInstruction += (int) value - 1;
+				System.out.println("skip " + curInstruction);
 				break;
 			case "setskip":
 				tmpid=-1;
@@ -475,6 +482,7 @@ public class Interpreter implements Executor {
 							tmp.put(tmpid,memory.size());
 							memory.add(memory.get(setFrom));
 							memdata.add(memdata.get(setFrom));
+							break;
 						} else {
 							printToConsole("A tmp variable has been used with an invalid identifier: "+cur0+".",true,i);
 							printTraceback(i);
@@ -482,18 +490,63 @@ public class Interpreter implements Executor {
 						}
 					}
 				} else {
-					if(isString(cur1)) value=removeQuotes(cur1);
-					else if(isInteger(cur1)) value=Integer.parseInt(cur1);
-					else if(isNumeric(cur1)) value=Double.parseDouble(cur1);
-					else if(isBoolean(cur1)) value=Boolean.parseBoolean(cur1);
+					int type=-1;
+					if(isString(cur1)) {value=removeQuotes(cur1);type=0;}
+					else if(isInteger(cur1)) {value=Integer.parseInt(cur1);type=1;}
+					else if(isNumeric(cur1)) {value=Double.parseDouble(cur1);type=2;}
+					else if(isBoolean(cur1)) {value=Boolean.parseBoolean(cur1);type=3;}
 					else {
 						printToConsole("An attempt to print a unparseable value of "+cur1+".",true,i);
 						printTraceback(i);
 						return;
 					}
+					if(addlater) {
+						if(tmpid>-1) {
+							tmp.put(tmpid,memory.size());
+							memory.add(value);
+							switch(type) {
+							case 0:
+								memdata.add("string");
+								break;
+							case 1:
+								memdata.add("integer");
+								break;
+							case 2:
+								memdata.add("float");
+								break;
+							case 3:
+								memdata.add("boolean");
+								break;
+							}
+							break;
+						} else {
+							printToConsole("A tmp variable has been used with an invalid identifier: "+cur0+".",true,i);
+							printTraceback(i);
+							return;
+						}
+					} else {
+						switch(type) {
+						case 0:
+							memdata.set(toSet,"string");
+							break;
+						case 1:
+							memdata.set(toSet,"integer");
+							break;
+						case 2:
+							memdata.set(toSet,"float");
+							break;
+						case 3:
+							memdata.set(toSet,"boolean");
+							break;
+						}
+					}
 				}
 				memory.set(toSet,null);
 				memory.set(toSet,value);
+				if(cur0.startsWith("%")&&!cur0.startsWith("%tmp")) {
+					if(cur0.substring(1).equals("DIV_ZERO"))DIV_ZERO=(double)value;
+					else if(cur0.substring(1).equals("ZERO_TO_ZERO"))ZERO_TO_ZERO=(double)value;
+				}
 				break;
 			case "iint":
 				variables.put(cur.data.get(0).substring(1),memory.size());
