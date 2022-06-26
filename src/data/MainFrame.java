@@ -248,9 +248,11 @@ public class MainFrame extends JFrame {
 				} else if(event.getType() == "Relaunch") {
 					Object[] options = { "OK", "CANCEL" };
 					if(JOptionPane.showOptionDialog(null, "You are about to relaunch the program, all unsaved work will be lost.\n"
-							+ "Click OK to continue.", "Warning",
-					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-					null, options, options[0]) == 0) PIBoot.relaunch();
+					+ "Click OK to continue.", "Warning", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,null, options, options[0]) == 0) PIBoot.relaunch();
+				} else if(event.getType() == "CondRelaunch") {
+					Object[] options = { "YES", "NO" };
+					if(JOptionPane.showOptionDialog(null, (String) event.getData()
+					+ "\nDo you want to relaunch?", "Pixel : Relaunch", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,null, options, options[0]) == 0) PIBoot.relaunch();
 				} else if(event.getType() == "Error") {
 					JOptionPane.showMessageDialog(null, event.getData(), "Pixel : Error", JOptionPane.ERROR_MESSAGE);
 				} else if(event.getType() == "Info") JOptionPane.showMessageDialog(null, event.getData(), "Pixel : Info", JOptionPane.INFORMATION_MESSAGE);

@@ -478,7 +478,7 @@ public class TreePanel extends JPanel{
 			bw = new BufferedWriter(new FileWriter(pFile));
 			bw.write(s);
 			bw.close();
-			fireTreeEvent(new TreeEvent(this, "Your workspace was set to " + s + ".\nIn order to use this workspace please relaunch this program.", "Info"));
+			fireTreeEvent(new TreeEvent(this, "Your workspace was set to " + s + ".\nIn order to use this workspace you need to relaunch this program.", "CondRelaunch"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			fireTreeEvent(new TreeEvent(this, "Your workspace could not be set.\nTry again, if you are stuck please contact Pixel Support\nand they will try to assist you.", "Error"));
