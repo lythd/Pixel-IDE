@@ -45,6 +45,7 @@ public class PixelPanel extends JPanel {
 	public String[] undo;
 	public int undol = 50;
 	private boolean off = false;
+	private boolean unsaved = false;
 
 	public PixelPanel(MainFrame mf) {
 		this.mf = mf;
@@ -110,6 +111,7 @@ public class PixelPanel extends JPanel {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
+				unsaved = true;
 				if(e.getKeyCode() != 18 && e.getKeyCode() != 16) {
 					if(e.getKeyCode() == 17) off = true;
 					if(!off) {
@@ -173,7 +175,8 @@ public class PixelPanel extends JPanel {
 	}
 	
 	public void setCode(String code) {
-		if(file != null) offerSave();
+		if(file != null && unsaved) offerSave();
+		unsaved = false;
 		file = null;
         codeArea.setCaret(hidden);
 		codeArea.setText(code);
@@ -188,7 +191,8 @@ public class PixelPanel extends JPanel {
 	}
 	
 	public void giveFile(File file) throws BadLocationException {
-		if(file != null) offerSave();
+		if(file != null && unsaved) offerSave();
+		unsaved = false;
 		this.file = file;
 		if(file != null) {
 			String string = "";
